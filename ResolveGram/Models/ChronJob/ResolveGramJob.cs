@@ -49,6 +49,7 @@ namespace ResolveGram.Models.ChronJob
                 .Build();
 
             scheduler.ScheduleJob(job, trigger).Wait(1);
+            //
 
         }
 
