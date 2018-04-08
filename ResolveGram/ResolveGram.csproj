@@ -333,6 +333,7 @@
     <Content Include="Content\plugin\datetimepicker\js\locales\bootstrap-datetimepicker.uk.js" />
     <Content Include="Content\plugin\datetimepicker\js\locales\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="Content\plugin\datetimepicker\js\locales\bootstrap-datetimepicker.zh-TW.js" />
+    <Content Include="Content\ScreenShot.PNG" />
     <Content Include="Content\TimeManagement.jpg" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
