@@ -1,0 +1,111 @@
+﻿@model  ResolveGram.Models.Entities.Account
+@{
+    ViewBag.Title = "Account";
+    <style>
+        .acc-col {
+            min-height: 300px;
+            background-color: #ffffff;
+            padding: 10px;
+            /*      border:#333 solid 1px;*/
+        }
+
+            .acc-col > h3 {
+                padding-bottom: 20px;
+            }
+
+        hr {
+            border: solid 1px #d6d6d6;
+        }
+
+        section > form > div {
+            padding: 5px;
+        }
+
+        .btn-div {
+            margin-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-head-line">Account Information </h1>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-sm-8 col-md-8 col-lg-8 col-lg-offset-2 acc-col">
+        <section>
+            <h3>Contact Information</h3>
+
+            @using (Html.BeginForm("UpdatePhoneNumber", "Home", FormMethod.Post, new { @class = "ng-pristine ng-valid", role = "form" }))
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="inputName" class="control-label">Name:</label>
+                        <input type="text" class="form-control" id="inputName" value="@Model.FirstName @Model.LastName" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="inputEmail3" class="control-label">Email:</label>
+                        <input type="email" class="form-control" id="inputEmail3" value="@Model.Email" disabled>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="inputPassword3" class="control-label">Phone Number:</label>
+                        <input type="text" class="form-control" id="inputPassword3" name="PhoneNumber">
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="btn-div">
+                        <button type="submit" class="btn btn-success pull-right">Update</button>
+                    </div>
+                </div>
+            }
+        </section>
+
+
+        <section>
+            <h3>Login Information</h3>
+            @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Change Password Form</h4>
+                <hr />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="inputEmail3" class="control-label">Old Password:</label>
+                        <div class="">
+                            <input type="password" class="form-control" id="inputEmail3">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="inputPassword3" class="control-label">New Password:</label>
+                        <div class="">
+                            <input type="password" class="form-control" name="NewPassword" id="inputPassword3">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <label for="inputPassword3" class="control-label">Confirm Password:</label>
+                        <div class="">
+                            <input type="password" class="form-control" name="ConfirmPassword" id="inputPassword3">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="btn-div">
+                            <button type="submit" class="btn btn-success pull-right">Update</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+
+
+    </div>
+    <!-- col-8 -->
+</div>

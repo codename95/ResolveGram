@@ -1,0 +1,169 @@
+﻿@model ResolveGram.Models.ViewModel.HomeDashBoardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="page-head-line">Dashboard <a href="/Home/AddTask" class="pull-right btn btn-success">New Task</a></h4>
+
+    </div>
+
+</div>
+@*<div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">Notifications</h4>
+                <p class="mb-0">Best check yo self, you're not looking too good. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, <a href="#" class="alert-link">vel scelerisque nisl consectetur et</a>.</p>
+            </div>
+        </div>
+
+    </div>*@
+<div class="row">
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <div class="dashboard-div-wrapper bk-clr-two">
+            <h2>@Model.TodayTask</h2>
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                </div>
+
+            </div>
+            <h5>Today's Task </h5>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <div class="dashboard-div-wrapper bk-clr-two">
+            <h2>@Model.TommorrowsTask</h2>
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+                </div>
+
+            </div>
+            <h5>Tommorrow's Task </h5>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <div class="dashboard-div-wrapper bk-clr-two">
+            <h2>@Model.NestWeekTask</h2>
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                </div>
+
+            </div>
+            <h5>Next Week Task </h5>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <div class="dashboard-div-wrapper bk-clr-two">
+            <h2>@Model.CompletedTask</h2>
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                </div>
+
+            </div>
+            <h5>Completed Tasks </h5>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="notice-board">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong> Notifications</strong>
+
+                </div>
+                <div class="panel-body">
+
+                    <ul>
+
+                        @*<li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-align-left text-success"></span>
+                                    Lorem ipsum dolor sit amet ipsum dolor sit amet
+                                    <span class="label label-warning"> Just now </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-info-sign text-danger"></span>
+                                    Lorem ipsum dolor sit amet ipsum dolor sit amet
+                                    <span class="label label-info"> 2 min chat</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-comment  text-warning"></span>
+                                    Lorem ipsum dolor sit amet ipsum dolor sit amet
+                                    <span class="label label-success">GO ! </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-edit  text-danger"></span>
+                                    Lorem ipsum dolor sit amet ipsum dolor sit amet
+                                    <span class="label label-success">Let's have it </span>
+                                </a>
+                            </li>*@
+                        @if (!Model.Notifications.Any())
+                        {
+                            <li>No New Notifications at this moment.</li>
+                        }
+                        else
+                        {
+                            foreach (var n in Model.Notifications)
+                            {
+                                <li>
+                                    <a href="#">
+                                        <span class="glyphicon glyphicon-@n.Icon  text-@n.CssClass"></span>
+                                        @n.Message
+                                        <span class="label label-@n.CssClass">@n.DateCreated.ToLongDateString() </span>
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <a href="#" class="btn btn-default btn-block"> <i class="glyphicon glyphicon-repeat"></i> Open All Notifications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <iframe id="youtube_video" width="550" height="350" frameborder="0" allowfullscreen></iframe>
+
+        <script>
+            var channelID = "UC3m2tne6Mxb2UHwYhFtM7SQ";
+            $.getJSON('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.youtube.com%2Ffeeds%2Fvideos.xml%3Fchannel_id%3D' + channelID, function (data) {
+                var link = data.items[0].link;
+                var id = link.substr(link.indexOf("=") + 1);
+                $("#youtube_video").attr("src", "https://youtube.com/embed/" + id + "?controls=0&showinfo=0&rel=0");
+            });
+        </script>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Modal title Here</h4>
+            </div>
+            <div class="modal-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.IPagedList<ResolveGram.Models.Entities.TaskList>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "All Task";
+    <style>
+        .team-content {
+            padding: 10px;
+        }
+    </style>
+    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".xxx").click(function () {
+                var taskID = $(this).data("id");
+                //alert(id);
+                $.ajax({
+                    url: '/Home/TaskDetail/?taskID=' + taskID,
+                    datatype: "json",
+                    type: "POST",
+                    contenttype: 'application/json; charset=utf-8',
+                    async: true,
+                    success: function (data) {
+                        $("#taskDetail").html(data);
+                    },
+                    error: function (xhr) {
+                        alert('Could Not Fetch Detail at the Moment. Error Occured.');
+                        //alert(xhr);
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-head-line">Task Listing  </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="site-heading text-center">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                @using (Html.BeginForm("AllTask", "Home", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <div class="input-group-btn search-panel">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span id="search_concept">Filter by</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Sort By Date Created", "AllTask", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-success" })</li>
+                                <li>@Html.ActionLink("Sort By Priority", "AllTask", new { sortOrder = ViewBag.PrioritySortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-success" })</li>
+                                <li>@Html.ActionLink("Sort By Category", "AllTask", new { sortOrder = ViewBag.CategorySortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-success" })</li>
+                                <li>@Html.ActionLink("Sort By Due Date", "AllTask", new { sortOrder = ViewBag.DueDateParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-success" })</li>
+                                <li>@Html.ActionLink("Sort By Status", "AllTask", new { sortOrder = ViewBag.IsCompleteSortParm, currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-success" })</li>
+                                <li class="divider"></li>
+                                <li><a href="#all">Refresh</a></li>
+                            </ul>
+                        </div>
+
+                        <input type="text" class="form-control" name="key" placeholder="Search Tasks...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="border"></div>
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <table class="table table-hover table-bordered">
+
+        <tr>
+            <td>Task</td>
+            <td>Start Date</td>
+            <td>Due Date</td>
+            <td>Priority</td>
+            <td>Category</td>
+            <td>Actions</td>
+        </tr>
+
+        <tbody>
+            @foreach (var task in Model)
+            {
+                <tr>
+                    <td>@task.TaskTitle.Substring(0, Math.Min(task.TaskTitle.Length, 65));</td>
+                    <td width="15%">@task.StartDate</td>
+                    <td width="15%">@task.DueDate</td>
+                    <td width="7%">@task.Priority.Name</td>
+                    <td width="10%">@task.Category.Name</td>
+                    <td width="6%"><a id="@task.TaskID" href="#" data-target="#myModal" data-toggle="modal" data-id="@task.TaskID" class="btn-sm btn-info xxx">View</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*@foreach (var task in Model)
+        {
+            <div class="col-md-4 team-box">
+                <div class="team-img thumbnail">
+                    <img src="https://images.pexels.com/photos/462680/pexels-photo-462680.jpeg?w=940&h=650&auto=compress&cs=tinysrgb">
+                    <div class="team-content">
+                        <h4>@task.TaskTitle </h4>
+                        <div class="border-team"></div>
+                        <p>@task.Notes</p>
+                        <p><strong>Start Date:</strong> @task.StartDate </p>
+                        <p><strong>Due Date:</strong> @task.DueDate </p>
+                        <p><strong>Priority: </strong>@task.Priority.Name &nbsp;&nbsp; <strong>Category:</strong> @task.Category.Name  &nbsp;&nbsp;</p>
+                        <p><strong style="color: red;">Status: </strong>@(task.IsComplete ? "Complete" : "Pending") &nbsp;&nbsp; &nabla;&nabla; &nbsp;&nbsp;<a href="#" class="btn-sm btn-danger">Delete</a>  </p>
+                        <div class="social-icons">
+                            <a class="btn-sm btn-primary" href="https://www.facebook.com/">Sub-Task (0)</a>
+                            <a class="btn-sm btn-primary" href="https://twitter.com/">Mark as Complete</a>
+                            <a class="btn-sm btn-primary" href="https://plus.google.com/">Delete</a>
+                            <a data-toggle="modal" data-id="@task.TaskID" data-target="#myModal" class="btn-sm btn-primary xxx"  id="@task.TaskID">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }*@
+    <hr />
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("AllTask", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Task Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div id="taskDetail">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿@model ResolveGram.Models.Entities.TaskList
+
+<div class="col-md-12 team-box">
+    <div class="team-img thumbnail">
+        <img src="../../Content/checklist-450x299.jpg">
+        <div class="team-content">
+            <h4><strong>Title: </strong>@Model.TaskTitle </h4>
+            <div class="border-team"></div>
+            <p><strong>Note: </strong>@Model.Notes</p>
+            <p><strong>Start Date:</strong> @Model.StartDate </p>
+            <p><strong>Due Date:</strong> @Model.DueDate </p>
+            <p><strong>Priority: </strong>@Model.Priority.Name &nbsp;&nbsp; <strong>Category:</strong> @Model.Category.Name  &nbsp;&nbsp;</p>
+            <p><strong style="color: red;">Status: </strong>@(Model.IsComplete ? "Complete" : "Pending") &nbsp;&nbsp; &nabla;&nabla; &nbsp;&nbsp;<a href="/Home/DeleteTask/@Model.TaskID" class="btn-sm btn-danger">Delete</a>  </p>
+            <div class="social-icons">
+                <a class="btn-sm btn-primary" href="#">Sub-Task (0)</a>
+                <a class="btn-sm btn-primary" href="#">Mark as Complete</a>
+                <a class="btn-sm btn-primary" href="#">Delete</a>
+                <a class="btn-sm btn-primary" href="#">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>

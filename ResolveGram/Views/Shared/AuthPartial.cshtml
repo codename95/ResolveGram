@@ -1,0 +1,20 @@
+﻿
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <span style="color: white">
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", style = "color: white" }) &nbsp;&nbsp;
+            <a href="javascript:document.getElementById('logoutForm').submit()" style="color: white">Log off</a>
+        </span>
+
+    }
+}
+else
+{
+    <span>Opps You are not Supposed to be here!</span>
+}
